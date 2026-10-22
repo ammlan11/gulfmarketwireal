@@ -1,0 +1,268 @@
+<%
+const editing = article && article.id;
+
+const val = (k) => article?.[k] ?? '';
+
+const isTop = article?.isTopStory === true;
+
+const otherTopStory =
+  typeof currentTopStory !== 'undefined' &&
+  currentTopStory &&
+  currentTopStory.id !== article?.id
+    ? currentTopStory
+    : null;
+
+const dt =
+  article?.publishedAt instanceof Date
+    ? new Date(
+        article.publishedAt.getTime() -
+        article.publishedAt.getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .slice(0, 16)
+    : (
+        article?.publishedAt ||
+        new Date().toISOString().slice(0, 16)
+      );
+%>
+
+<div class="heading">
+  <div>
+    <h1><%= editing ? 'Edit news' : 'Add news' %></h1>
+
+    <p class="muted">
+      Fields match the NewsArticle contract used by your consuming application.
+    </p>
+  </div>
+</div>
+
+<% if (error) { %>
+  <div class="alert">
+    <%= error %>
+  </div>
+<% } %>
+
+<form
+  class="card formgrid"
+  method="post"
+  action="<%= editing ? '/admin/news/' + article.id : '/admin/news' %>"
+  enctype="multipart/form-data"
+>
+
+  <!-- TITLE -->
+  <label class="full">
+    Title
+    <input
+      name="title"
+      maxlength="500"
+      required
+      value="<%= val('title') %>"
+    >
+  </label>
+
+  <!-- DESCRIPTION -->
+  <label class="full">
+    Description
+    <textarea
+      name="description"
+      rows="3"
+    ><%= val('description') %></textarea>
+  </label>
+
+  <!-- CONTENT -->
+  <label class="full">
+    Content
+    <textarea
+      name="content"
+      rows="12"
+    ><%= val('content') %></textarea>
+  </label>
+
+
+  <!-- FEATURED IMAGE -->
+  <div class="full">
+
+    <% if (editing && val('imageUrl')) { %>
+
+      <label>Current featured image</label>
+
+      <div class="current-image">
+        <img
+          src="<%= val('imageUrl') %>"
+          alt="<%= val('title') %>"
+          class="article-image-preview"
+        >
+      </div>
+
+      <p class="muted">
+        Upload another image below to replace the current image.
+      </p>
+
+    <% } %>
+
+    <label for="image">
+      <%= editing ? 'Replace featured image' : 'Featured image' %>
+    </label>
+
+    <input
+      id="image"
+      type="file"
+      name="image"
+      accept="image/jpeg,image/png,image/webp,image/gif"
+      <%= editing ? '' : 'required' %>
+    >
+
+    <p class="muted">
+      JPG, PNG, WEBP or GIF. Maximum size: 8 MB.
+    </p>
+
+  </div>
+
+
+  <!-- SOURCE -->
+  <label>
+    Source
+
+    <input
+      name="source"
+      maxlength="255"
+      required
+      value="<%= val('source') %>"
+    >
+  </label>
+
+
+  <!-- SOURCE URL -->
+  <label>
+    Source URL
+
+    <input
+      type="url"
+      name="sourceUrl"
+      value="<%= val('sourceUrl') %>"
+    >
+  </label>
+
+
+  <!-- ORIGINAL ARTICLE URL -->
+  <label>
+    Original article URL
+
+    <input
+      type="url"
+      name="url"
+      required
+      value="<%= val('url') %>"
+    >
+  </label>
+
+
+  <!-- CATEGORY -->
+  <label>
+    Category
+
+    <select
+      name="category"
+      required
+    >
+      <% categories.forEach(c => { %>
+
+        <option
+          value="<%= c %>"
+          <%= val('category') === c ? 'selected' : '' %>
+        >
+          <%= c %>
+        </option>
+
+      <% }) %>
+    </select>
+  </label>
+
+
+  <!-- PUBLISHED DATE -->
+  <label>
+    Published at
+
+    <input
+      type="datetime-local"
+      name="publishedAt"
+      required
+      value="<%= dt %>"
+    >
+  </label>
+
+
+  <!-- STATUS -->
+  <label>
+    Status
+
+    <select name="status">
+
+      <option
+        value="DRAFT"
+        <%= val('status') === 'DRAFT' ? 'selected' : '' %>
+      >
+        Draft
+      </option>
+
+      <option
+        value="PUBLISHED"
+        <%= val('status') === 'PUBLISHED' ? 'selected' : '' %>
+      >
+        Published
+      </option>
+
+    </select>
+  </label>
+
+
+  <!-- HOME PAGE TOP STORY -->
+  <div class="full topstory-box">
+
+    <label class="checkbox">
+      <input
+        type="checkbox"
+        name="isTopStory"
+        <%= isTop ? 'checked' : '' %>
+      >
+
+      <span>
+        Make this the <strong>Top Story</strong> on the home page
+      </span>
+    </label>
+
+    <p class="muted">
+      Only one article can be the Top Story. It must be <strong>Published</strong> to appear on the website.
+      <% if (otherTopStory) { %>
+        <br>
+        Ticking this replaces the current Top Story:
+        <a href="/admin/news/<%= otherTopStory.id %>">“<%= otherTopStory.title %>”</a><% if (otherTopStory.status !== 'PUBLISHED') { %> (draft)<% } %>.
+      <% } else if (!isTop) { %>
+        <br>
+        No Top Story is chosen, so the website shows the newest article.
+      <% } %>
+    </p>
+
+  </div>
+
+
+  <!-- ACTIONS -->
+  <div class="full form-actions">
+
+    <a
+      class="button"
+      href="/admin/news"
+    >
+      Cancel
+    </a>
+
+    <button
+      class="primary"
+      type="submit"
+    >
+      <%= editing ? 'Update article' : 'Create article' %>
+    </button>
+
+  </div>
+
+</form>

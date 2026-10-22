@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum NewsStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model NewsArticle {
+  id          String     @id @db.VarChar(64)
+  title       String     @db.VarChar(500)
+  description String?    @db.Text
+  content     String?    @db.LongText
+  imageUrl    String?    @db.Text
+  source      String     @db.VarChar(255)
+  sourceUrl   String?    @db.Text
+  url         String     @unique @db.VarChar(700)
+  publishedAt DateTime
+  category    String?    @db.VarChar(64)
+  status      NewsStatus @default(DRAFT)
+
+  // The single article shown as the Top Story on the website's home page.
+  isTopStory  Boolean    @default(false)
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([category])
+  @@index([publishedAt])
+  @@index([status, publishedAt])
+  @@index([category, status, publishedAt])
+  @@index([isTopStory])
+}
