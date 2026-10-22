@@ -1,0 +1,328 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #efefef;
+  color: #000000;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1290px);
+  margin: 0 auto;
+}
+
+.accountNav {
+  display: flex;
+  gap: 38px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #bcbcbc;
+}
+
+.accountNav a {
+  position: relative;
+
+  color: #000000;
+  text-decoration: none;
+
+  font-size: 14px;
+}
+
+.accountNav .active {
+  font-weight: 700;
+}
+
+.accountNav .active::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -15px;
+
+  height: 3px;
+
+  background: #000000;
+}
+
+.pageIntro {
+  padding: 24px 0 22px;
+}
+
+.pageIntro h1 {
+  margin: 0;
+
+  font-size: 27px;
+  letter-spacing: -0.03em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.04fr;
+
+  gap: 24px;
+
+  padding-bottom: 70px;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  background: #ffffff;
+
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+
+  padding: 24px;
+}
+
+.card h2 {
+  margin: 0 0 24px;
+
+  font-size: 27px;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  margin-bottom: 26px;
+}
+
+.infoRow span {
+  font-size: 14px;
+}
+
+.infoRow strong {
+  font-size: 16px;
+}
+
+.primaryButton {
+  padding: 13px 24px;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: #000000;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #222222;
+}
+
+.muted {
+  color: #555555;
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.linkedAccount {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 18px;
+
+  font-size: 15px;
+}
+
+.googleIcon {
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  font-weight: 800;
+  color: #4285f4;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.formStack select {
+  width: 100%;
+  height: 52px;
+
+  padding: 0 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+
+  font-size: 15px;
+}
+
+.emailSetting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin: 28px 0;
+}
+
+.emailSetting span {
+  font-size: 15px;
+}
+
+.emailSetting button {
+  min-width: 120px;
+
+  padding: 10px 20px;
+
+  border: 0;
+  border-radius: 24px;
+
+  background: #000000;
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .accountNav {
+    overflow-x: auto;
+    gap: 24px;
+  }
+
+  .emailSetting {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+.editField {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  margin-bottom: 22px;
+}
+
+.editField label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.editField input {
+  width: 100%;
+  height: 48px;
+
+  padding: 0 14px;
+
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+
+  background: #ffffff;
+  color: #000000;
+
+  font: inherit;
+  font-size: 15px;
+
+  box-sizing: border-box;
+}
+
+.editField input:focus {
+  outline: 2px solid #000000;
+  outline-offset: 1px;
+}
+
+.editActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 8px;
+}
+
+.secondaryButton {
+  padding: 12px 22px;
+
+  border: 1px solid #000000;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #000000;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: #f3f3f3;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.readOnlyText {
+  margin-top: 2px;
+
+  color: #777777;
+
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.successMessage {
+  margin: 0 0 18px;
+
+  color: #16753a;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.errorMessage {
+  margin: 0 0 18px;
+
+  color: #b42318;
+
+  font-size: 13px;
+  font-weight: 600;
+}

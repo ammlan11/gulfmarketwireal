@@ -1,0 +1,5 @@
+ALTER TABLE `User`
+MODIFY COLUMN `isTrader`
+ENUM('YES', 'NO')
+NOT NULL
+DEFAULT 'NO';

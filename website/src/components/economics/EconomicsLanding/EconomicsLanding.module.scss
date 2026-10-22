@@ -1,0 +1,511 @@
+.page {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+  padding: 36px 0 80px;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.pageHeader {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.pageHeader h1 {
+  margin: 0;
+
+  font-size: clamp(52px, 5vw, 76px);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.pageHeader nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+
+  margin-top: 18px;
+}
+
+.pageHeader nav a {
+  color: #000000;
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pageHeader nav a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   TOP STORIES
+========================================= */
+
+.topGrid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.55fr)
+    minmax(420px, 1fr);
+
+  border-bottom: 1px solid #bdbdbd;
+}
+
+/* =========================================
+   LEAD STORY
+========================================= */
+
+.leadStory {
+  min-width: 0;
+
+  padding: 28px 28px 34px 0;
+
+  border-right: 1px solid #bdbdbd;
+}
+
+.leadStory img {
+  display: block;
+
+  width: 100%;
+  height: 430px;
+
+  object-fit: cover;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-top: 9px;
+
+  font-size: 11px;
+  color: #666666;
+}
+
+.leadStory a,
+.storyCard a,
+.moreSection a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.leadStory h2 {
+  margin: 12px 0 0;
+
+  font-size: clamp(40px, 4vw, 56px);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.leadStory h2:hover,
+.storyCard h3:hover,
+.moreSection h3:hover {
+  text-decoration: underline;
+}
+
+.leadStory p {
+  margin: 16px 0 0;
+
+  max-width: 760px;
+
+  font-size: 17px;
+  line-height: 1.42;
+  color: #333333;
+}
+
+/* =========================================
+   SECONDARY STORIES
+========================================= */
+
+.secondary {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  align-content: start;
+
+  padding: 28px 0 28px 28px;
+
+  gap: 0 20px;
+}
+
+.secondary .storyCard {
+  min-width: 0;
+
+  padding: 0 0 22px;
+
+  margin-bottom: 22px;
+
+  border-bottom: 1px solid #cccccc;
+}
+
+.secondary .storyCard:nth-last-child(-n + 2) {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   STORY CARD
+========================================= */
+
+.storyCard {
+  min-width: 0;
+}
+
+.storyCard img {
+  display: block;
+
+  width: 100%;
+  height: 160px;
+
+  object-fit: cover;
+}
+
+.storyCard h3 {
+  margin: 8px 0 0;
+
+  font-size: 20px;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.storyCard p {
+  margin: 9px 0 0;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: #555555;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+/* =========================================
+   NEWS SECTIONS
+========================================= */
+
+.newsSection {
+  padding: 40px 0 44px;
+
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.newsSection > h2 {
+  margin: 0 0 18px;
+
+  padding-bottom: 12px;
+
+  border-bottom: 3px solid #000000;
+
+  font-size: 26px;
+  line-height: 1;
+}
+
+/* =========================================
+   FOUR-COLUMN NEWS GRID
+========================================= */
+
+.cardGrid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+.cardGrid .storyCard {
+  padding: 0;
+
+  border-bottom: 0;
+}
+
+.cardGrid .storyCard img {
+  width: 100%;
+  height: 190px;
+
+  object-fit: cover;
+}
+
+/* =========================================
+   MORE FROM ECONOMICS
+========================================= */
+
+.moreSection {
+  padding: 42px 0;
+}
+
+.moreSection > h2 {
+  margin: 0 0 18px;
+
+  font-size: 27px;
+}
+
+.moreSection article {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    220px;
+
+  align-items: center;
+
+  gap: 28px;
+
+  padding: 20px 0;
+
+  border-top: 1px solid #cccccc;
+}
+
+.moreSection article:first-of-type {
+  border-top: 3px solid #000000;
+}
+
+.moreSection article span {
+  font-size: 11px;
+  color: #666666;
+}
+
+.moreSection article h3 {
+  margin: 6px 0 0;
+
+  max-width: 900px;
+
+  font-size: 25px;
+  line-height: 1.08;
+}
+
+.moreSection article p {
+  margin: 9px 0 0;
+
+  max-width: 850px;
+
+  font-size: 14px;
+  line-height: 1.45;
+
+  color: #555555;
+}
+
+.moreSection article img {
+  display: block;
+
+  width: 220px;
+  height: 130px;
+
+  object-fit: cover;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1050px) {
+  .topGrid {
+    grid-template-columns:
+      minmax(0, 1.25fr)
+      minmax(320px, 0.85fr);
+  }
+
+  .secondary {
+    grid-template-columns: 1fr;
+
+    padding-left: 24px;
+  }
+
+  .secondary .storyCard {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+  }
+
+  .secondary .storyCard:nth-last-child(-n + 2) {
+    margin-bottom: 18px;
+  }
+
+  .secondary .storyCard:last-child {
+    margin-bottom: 0;
+  }
+
+  .secondary .storyCard img {
+    height: 180px;
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cardGrid .storyCard img {
+    height: 220px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .container {
+    width: calc(100% - 32px);
+
+    padding-top: 28px;
+  }
+
+  .pageHeader h1 {
+    font-size: 52px;
+  }
+
+  .pageHeader nav {
+    gap: 12px 20px;
+  }
+
+  /* Stack the lead and secondary stories */
+
+  .topGrid {
+    display: block;
+  }
+
+  .leadStory {
+    padding: 24px 0 28px;
+
+    border-right: 0;
+    border-bottom: 1px solid #bdbdbd;
+  }
+
+  .leadStory img {
+    height: 260px;
+  }
+
+  .leadStory h2 {
+    font-size: 38px;
+  }
+
+  /* Secondary stories */
+
+  .secondary {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    padding: 0;
+  }
+
+  .secondary .storyCard {
+    padding: 22px 0;
+    margin: 0;
+
+    border-bottom: 1px solid #cccccc;
+  }
+
+  .secondary .storyCard:nth-last-child(-n + 2) {
+    margin-bottom: 0;
+  }
+
+  .secondary .storyCard:last-child {
+    border-bottom: 0;
+  }
+
+  .secondary .storyCard img {
+    height: 220px;
+  }
+
+  .storyCard h3 {
+    font-size: 22px;
+  }
+
+  /* News sections */
+
+  .newsSection {
+    padding: 32px 0;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+
+    gap: 28px;
+  }
+
+  .cardGrid .storyCard {
+    padding-bottom: 26px;
+
+    border-bottom: 1px solid #cccccc;
+  }
+
+  .cardGrid .storyCard:last-child {
+    padding-bottom: 0;
+
+    border-bottom: 0;
+  }
+
+  .cardGrid .storyCard img {
+    height: 240px;
+  }
+
+  /* More Economics */
+
+  .moreSection article {
+    grid-template-columns:
+      minmax(0, 1fr)
+      110px;
+
+    gap: 16px;
+  }
+
+  .moreSection article h3 {
+    font-size: 20px;
+  }
+
+  .moreSection article p {
+    display: none;
+  }
+
+  .moreSection article img {
+    width: 110px;
+    height: 80px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+  .pageHeader h1 {
+    font-size: 46px;
+  }
+
+  .leadStory img {
+    height: 220px;
+  }
+
+  .leadStory h2 {
+    font-size: 34px;
+  }
+
+  .secondary .storyCard img,
+  .cardGrid .storyCard img {
+    height: 210px;
+  }
+
+  .moreSection article {
+    grid-template-columns:
+      minmax(0, 1fr)
+      95px;
+  }
+
+  .moreSection article img {
+    width: 95px;
+    height: 72px;
+  }
+}

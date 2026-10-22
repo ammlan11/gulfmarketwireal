@@ -1,0 +1,17 @@
+// ============================================================
+// BREAKPOINTS
+// ============================================================
+// Usage: @include respond-to('mobile') { ... }
+//
+// Breakpoint scale:
+//   mobile  → max 480px
+//   tablet  → max 768px
+//   laptop  → max 1024px
+//   desktop → min 1025px
+
+$breakpoints: (
+  'mobile':  480px,
+  'tablet':  768px,
+  'laptop':  1024px,
+  'wide':    1280px,
+);

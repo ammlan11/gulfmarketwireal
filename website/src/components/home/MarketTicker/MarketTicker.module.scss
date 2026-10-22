@@ -1,0 +1,145 @@
+.ticker {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1320px);
+  height: 54px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  gap: 26px;
+
+  overflow: hidden;
+}
+
+.label {
+  flex: 0 0 auto;
+
+  min-width: 140px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 14px;
+  color: #000000;
+}
+
+.chevron {
+  font-size: 13px;
+}
+
+.track {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.quote {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  min-height: 32px;
+
+  padding: 0 12px;
+
+  background: #252525;
+  border-radius: 10px;
+
+  color: #ffffff;
+
+  white-space: nowrap;
+
+  font-size: 13px;
+}
+
+/* Market closed: same chip, slightly muted, with a "Close" tag. */
+.quoteClosed {
+  background: #3a3a3a;
+  color: #e4e4e4;
+}
+
+.closeTag {
+  padding: 2px 6px;
+
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #cfcfcf;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.quote strong {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+}
+
+.positive {
+  color: #54c96b;
+  font-variant-numeric: tabular-nums;
+}
+
+.negative {
+  color: #ff4d4d;
+  font-variant-numeric: tabular-nums;
+}
+
+.flat {
+  color: #bdbdbd;
+  font-variant-numeric: tabular-nums;
+}
+
+.loading {
+  font-size: 13px;
+  color: #777777;
+}
+
+@media (max-width: 720px) {
+  .container {
+    width: calc(100% - 32px);
+    height: 50px;
+    gap: 14px;
+  }
+
+  .label {
+    min-width: auto;
+  }
+
+  .label span:first-child {
+    display: none;
+  }
+
+  .quote {
+    padding: 0 10px;
+  }
+}
+
+.unavailable {
+  font-size: 13px;
+  color: #777777;
+  white-space: nowrap;
+}

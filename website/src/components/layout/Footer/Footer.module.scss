@@ -1,0 +1,167 @@
+.footer {
+  width: 100%;
+  background: #050505;
+  color: #ffffff;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+  padding: 52px 0 24px;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 80px;
+
+  padding-bottom: 42px;
+  border-bottom: 1px solid #2f2f2f;
+}
+
+.brand {
+  max-width: 420px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-left: -100px;
+
+  width: 320px;
+  height: 100px;
+
+  overflow: hidden;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  img {
+    width: 500px;
+    height: auto;
+
+    display: block;
+    object-fit: contain;
+  }
+}
+
+.brand p {
+  margin: 18px 0 0;
+
+  max-width: 360px;
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: #adadad;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.column h3 {
+  margin: 0 0 8px;
+
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.column a {
+  color: #c8c8c8;
+  text-decoration: none;
+
+  font-size: 14px;
+}
+
+.column a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  padding-top: 22px;
+
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.bottom div {
+  display: flex;
+  gap: 18px;
+}
+
+.bottom a {
+  color: #8e8e8e;
+  text-decoration: none;
+}
+
+.bottom a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 850px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .logo {
+    margin-left: -70px;
+    width: 260px;
+
+    img {
+      width: 380px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .logo {
+    margin-left: -40px;
+    width: 200px;
+
+    img {
+      width: 300px;
+    }
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

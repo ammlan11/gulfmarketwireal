@@ -1,0 +1,308 @@
+.page {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+  padding: 36px 0 80px;
+}
+
+.pageHeader {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.pageHeader h1 {
+  margin: 0;
+
+  font-size: clamp(52px, 5vw, 76px);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.pageHeader nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+
+  margin-top: 18px;
+}
+
+.pageHeader nav a {
+  color: #000000;
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pageHeader nav a:hover {
+  text-decoration: underline;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(300px, 0.8fr)
+    minmax(280px, 0.7fr);
+
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.leadStory {
+  padding: 28px 28px 34px 0;
+  border-right: 1px solid #bdbdbd;
+}
+
+.leadStory img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-top: 9px;
+
+  font-size: 11px;
+  color: #666666;
+}
+
+.leadStory a,
+.storyCard a,
+.latest a,
+.moreSection a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.leadStory h2 {
+  margin: 12px 0 0;
+
+  font-size: 52px;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.leadStory p {
+  margin: 16px 0 0;
+
+  font-size: 17px;
+  line-height: 1.42;
+  color: #333333;
+}
+
+.secondary {
+  padding: 0 24px;
+  border-right: 1px solid #bdbdbd;
+}
+
+.storyCard {
+  padding: 20px 0;
+  border-bottom: 1px solid #cccccc;
+}
+
+.storyCard img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.storyCard h3 {
+  margin: 8px 0 0;
+
+  font-size: 21px;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.latest {
+  padding: 24px 0 20px 24px;
+}
+
+.latestHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 12px;
+  border-bottom: 3px solid #000000;
+}
+
+.latestHeader h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.latestHeader span {
+  font-size: 11px;
+  font-weight: 800;
+  color: #e00000;
+}
+
+.latest article {
+  padding: 14px 0;
+  border-bottom: 1px solid #cccccc;
+}
+
+.latest small {
+  color: #666666;
+}
+
+.latest h3 {
+  margin: 5px 0;
+
+  font-size: 17px;
+  line-height: 1.15;
+}
+
+.latest article > span {
+  font-size: 11px;
+  color: #666666;
+}
+
+.newsSection {
+  padding: 40px 0 44px;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.newsSection > h2 {
+  margin: 0 0 18px;
+
+  font-size: 23px;
+  line-height: 1;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cardGrid .storyCard {
+  border-bottom: 0;
+  padding: 0;
+}
+
+.cardGrid .storyCard img {
+  height: 190px;
+}
+
+.moreSection {
+  padding: 42px 0;
+}
+
+.moreSection > h2 {
+  margin: 0 0 18px;
+
+  font-size: 25px;
+}
+
+.moreSection article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 22px;
+
+  padding: 18px 0;
+  border-top: 1px solid #cccccc;
+}
+
+.moreSection article:first-of-type {
+  border-top: 3px solid #000000;
+}
+
+.moreSection article span {
+  font-size: 11px;
+  color: #666666;
+}
+
+.moreSection article h3 {
+  margin: 6px 0 0;
+
+  font-size: 23px;
+  line-height: 1.08;
+}
+
+.moreSection article img {
+  width: 180px;
+  height: 110px;
+  object-fit: cover;
+}
+
+.empty {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 50px auto;
+  font-size: 18px;
+}
+
+@media (max-width: 1050px) {
+  .topGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .latest {
+    grid-column: 1 / -1;
+    padding-left: 0;
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .pageHeader h1 {
+    font-size: 52px;
+  }
+
+  .topGrid {
+    display: block;
+  }
+
+  .leadStory,
+  .secondary {
+    border-right: 0;
+  }
+
+  .leadStory {
+    padding-right: 0;
+  }
+
+  .secondary {
+    padding: 0;
+  }
+
+  .leadStory img {
+    height: 250px;
+  }
+
+  .leadStory h2 {
+    font-size: 38px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .moreSection article {
+    grid-template-columns: minmax(0, 1fr) 110px;
+  }
+
+  .moreSection article img {
+    width: 110px;
+    height: 80px;
+  }
+}

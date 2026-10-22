@@ -1,0 +1,154 @@
+.wrapper {
+  position: relative;
+}
+
+.userButton,
+.loginButton,
+.loadingButton {
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 0 12px;
+
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+
+  background: #000000;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.userButton {
+  cursor: pointer;
+}
+
+.userIcon {
+  font-size: 10px;
+}
+
+.userName {
+  max-width: 110px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chevron {
+  display: inline-block;
+
+  transition: transform 0.18s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  z-index: 500;
+
+  width: 210px;
+
+  background: #1c1c1c;
+  color: #ffffff;
+
+  border: 1px solid #444444;
+
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.32);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 14px 14px 12px;
+
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.userInfo strong {
+  font-size: 13px;
+}
+
+.userInfo span {
+  font-size: 11px;
+  color: #a9a9a9;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.menuGroup {
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px 0;
+}
+
+.menuGroup a {
+  display: block;
+
+  padding: 10px 14px;
+
+  color: #ffffff;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.menuGroup a:hover {
+  background: #2b2b2b;
+}
+
+.divider {
+  height: 1px;
+  background: #3a3a3a;
+}
+
+.signOut {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 0;
+
+  background: transparent;
+  color: #ff4a4a;
+
+  text-align: left;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.signOut:hover {
+  background: #2b2b2b;
+}
+
+@media (max-width: 700px) {
+  .userName {
+    max-width: 72px;
+  }
+
+  .dropdown {
+    width: 190px;
+  }
+}

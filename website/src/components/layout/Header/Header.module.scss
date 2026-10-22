@@ -1,0 +1,160 @@
+@use "../../../styles/variables" as *;
+
+.header {
+  width: 100%;
+  background: #000;
+  color: #fff;
+}
+
+.top {
+  height: 72px;
+  background: #000;
+}
+
+.inner {
+  width: min(calc(100% - 64px), 1320px);
+  height: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  margin-left: -130px;
+
+  height: auto;
+  overflow: visible;
+
+  img {
+    width: 380px;
+    height: auto;
+
+    display: block;
+    object-fit: contain;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.newsButton,
+.subscribeButton,
+.userButton,
+.searchButton {
+  height: 31px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 3px;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.newsButton {
+  min-width: 102px;
+  padding: 0 13px;
+
+  border: 1px solid #fff;
+
+  background: transparent;
+  color: #fff;
+}
+
+.subscribeButton {
+  min-width: 100px;
+  padding: 0 14px;
+
+  border: 1px solid #fff;
+
+  background: #fff;
+  color: #000;
+}
+
+.userButton {
+  min-width: 58px;
+  padding: 0 12px;
+
+  border: 1px solid #fff;
+
+  background: transparent;
+  color: #fff;
+}
+
+.searchButton {
+  width: 32px;
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+  color: #fff;
+
+  font-size: 19px;
+}
+
+.newsButton:hover,
+.userButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.subscribeButton:hover {
+  background: #eeeeee;
+}
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 768px) {
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .logo {
+    margin-left: -60px;
+
+    img {
+      width: 260px;
+    }
+  }
+
+  .newsButton {
+    display: none;
+  }
+}
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 480px) {
+  .top {
+    height: 60px;
+  }
+
+  .logo {
+    margin-left: -40px;
+
+    img {
+      width: 200px;
+    }
+  }
+
+  .subscribeButton {
+    display: none;
+  }
+}

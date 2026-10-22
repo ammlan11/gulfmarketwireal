@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `industry` VARCHAR(150) NULL,
+    ADD COLUMN `jobTitle` VARCHAR(100) NULL,
+    ADD COLUMN `region` VARCHAR(100) NULL,
+    ADD COLUMN `seniority` VARCHAR(100) NULL;

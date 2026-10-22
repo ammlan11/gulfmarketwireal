@@ -1,0 +1,295 @@
+.page {
+  min-height: 70vh;
+  padding: 40px 0 80px;
+
+  background: #ffffff;
+  color: #000000;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 32px);
+  }
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  h1 {
+    margin: 0;
+
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.timezone {
+  font-size: 12px;
+  color: #666666;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+
+  margin-top: 28px;
+
+  border-bottom: 1px solid #dddddd;
+
+  overflow-x: auto;
+}
+
+.tab,
+.activeTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 16px;
+  margin-bottom: -1px;
+
+  border-bottom: 3px solid transparent;
+
+  color: #555555;
+  text-decoration: none;
+  white-space: nowrap;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  &:hover {
+    color: #000000;
+  }
+}
+
+.activeTab {
+  border-bottom-color: #000000;
+  color: #000000;
+}
+
+.count {
+  min-width: 24px;
+  padding: 2px 7px;
+
+  border-radius: 999px;
+  background: #eeeeee;
+
+  text-align: center;
+  font-size: 12px;
+}
+
+.activeTab .count {
+  background: #000000;
+  color: #ffffff;
+}
+
+.hint {
+  margin: 16px 0 0;
+
+  font-size: 14px;
+  color: #555555;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  margin-top: 18px;
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: 11px 18px;
+
+  border: 1px solid #000000;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.primaryButton {
+  background: #000000;
+  color: #ffffff;
+}
+
+.secondaryButton {
+  background: #ffffff;
+  color: #000000;
+}
+
+.success,
+.error {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+
+  font-size: 14px;
+}
+
+.success {
+  background: #eaf6ec;
+  color: #1e6b2e;
+}
+
+.error {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.tableWrap {
+  margin-top: 18px;
+
+  border: 1px solid #e2e2e2;
+
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-size: 14px;
+
+  th,
+  td {
+    padding: 12px 14px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+
+    background: #f6f6f6;
+
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  tbody tr:hover {
+    background: #fafafa;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+.selectedRow,
+.selectedRow:hover {
+  background: #f1f1f1 !important;
+}
+
+.checkCell {
+  width: 36px;
+
+  input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.muted {
+  color: #999999;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+
+  background: #000000;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.path {
+  max-width: 260px;
+
+  overflow-wrap: anywhere;
+  color: #555555;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.empty {
+  margin-top: 18px;
+  padding: 48px 24px;
+
+  border: 1px dashed #cccccc;
+
+  text-align: center;
+  color: #666666;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 18px;
+
+  font-size: 14px;
+
+  a {
+    color: #000000;
+    font-weight: 700;
+  }
+}

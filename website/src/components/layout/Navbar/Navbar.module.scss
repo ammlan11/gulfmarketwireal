@@ -1,0 +1,131 @@
+@use "../../../styles/variables" as *;
+
+.navbar {
+  position: relative;
+
+  height: 40px;
+
+  background: #1c1c1c;
+
+  border-bottom: 1px solid #3a3a3a;
+
+  z-index: 100;
+}
+
+.inner {
+  width: min(calc(100% - 64px), 1320px);
+  height: 100%;
+  margin: 0 auto;
+}
+
+.nav {
+  height: 100%;
+
+  display: flex;
+  align-items: stretch;
+}
+
+.navLink,
+.liveTv {
+  position: relative;
+
+  height: 100%;
+
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+
+  transition: background 0.15s ease;
+}
+
+.navLink:hover,
+.liveTv:hover {
+  background: #272727;
+}
+
+.liveTv {
+  padding-left: 0;
+  padding-right: 15px;
+
+  color: #ff4747;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+
+  flex-shrink: 0;
+
+  border-radius: 999px;
+
+  background: #ff4747;
+}
+
+.marketWrapper {
+  position: relative;
+  height: 100%;
+}
+
+.marketWrapper:hover .navLink {
+  background: #252525;
+}
+
+.marketWrapper:hover .navLink::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 3px;
+
+  background: #fff;
+}
+
+.chevron {
+  position: relative;
+  top: -1px;
+
+  font-size: 15px;
+  font-weight: 400;
+}
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 768px) {
+  .inner {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .nav {
+    padding: 0 16px;
+    width: max-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .navLink,
+  .liveTv {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,45 @@
+@use 'breakpoints' as *;
+
+// ============================================================
+// RESPONSIVE MIXIN
+// ============================================================
+// Usage:
+//   @include respond-to('mobile')  { font-size: 14px; }
+//   @include respond-to('tablet')  { grid-template-columns: 1fr; }
+
+@mixin respond-to($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value {
+    @media (max-width: $value) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+// ============================================================
+// CONTAINER MIXIN
+// ============================================================
+// Responsive container with side padding
+
+@mixin container($max: 1320px) {
+  width: min(calc(100% - 64px), $max);
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 32px);
+  }
+}
+
+// ============================================================
+// TRUNCATE
+// ============================================================
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}

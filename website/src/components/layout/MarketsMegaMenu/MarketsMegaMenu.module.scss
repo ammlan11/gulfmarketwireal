@@ -1,0 +1,248 @@
+@use "../../../styles/variables" as *;
+
+.menu {
+  position: absolute;
+
+  top: 40px;
+  left: -88px;
+
+  width: 1325px;
+  min-height: 345px;
+
+  display: grid;
+  grid-template-columns:
+    175px
+    178px
+    minmax(0, 1fr)
+    270px;
+
+
+  background: #1b1b1b;
+
+  border: 1px solid #3a3a3a;
+
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  z-index: 999;
+}
+
+.column {
+  padding: 20px 19px 18px;
+
+  border-right: 1px solid #373737;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heading {
+  margin-bottom: 17px;
+
+  color: #aeb2b7;
+
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.link {
+  margin-bottom: 18px;
+
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.15;
+
+  white-space: normal;
+}
+
+.link:last-child {
+  margin-bottom: 0;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.securitiesSection {
+  padding: 20px 20px 18px;
+}
+
+.securityGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 18px 22px;
+}
+
+.securityCard {
+  min-height: 78px;
+
+  padding: 10px 10px;
+
+  border-radius: 8px;
+
+  background: #262626;
+}
+
+.securityName {
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+// .securityValue {
+//   margin-top: 2px;
+
+//   color: #fff;
+
+//   font-size: 14px;
+//   font-weight: 700;
+//   line-height: 1.15;
+// }
+
+// .positive,
+// .negative {
+//   margin-top: 3px;
+
+//   font-size: 14px;
+//   font-weight: 700;
+//   line-height: 1;
+// }
+
+// .positive {
+//   color: #4ecb67;
+// }
+
+// .negative {
+//   color: #ff5146;
+// }
+
+.securityValue {
+  margin-top: 2px;
+
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.positive,
+.negative,
+.neutral {
+  margin-top: 3px;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.positive {
+  color: #4ecb67;
+}
+
+.negative {
+  color: #ff5146;
+}
+
+.neutral {
+  color: #aeb2b7;
+}
+
+.marketUnavailable {
+  padding: 14px;
+
+  border-radius: 8px;
+  background: #262626;
+
+  color: #aeb2b7;
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.watchlist {
+  padding: 20px;
+
+  border-left: 1px solid #373737;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  color: #fff;
+}
+
+.watchlist p {
+  margin-bottom: 28px;
+
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.17;
+}
+
+.watchlistButton {
+  height: 36px;
+
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  border: 0;
+  border-radius: 3px;
+
+  background: #fff;
+  color: #000;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.watchlistButton:hover {
+  background: #ededed;
+}
+
+// .securityUnavailable {
+//   margin-top: 8px;
+
+//   color: #aeb2b7;
+
+//   font-size: 13px;
+//   font-weight: 500;
+//   line-height: 1.2;
+// }
+
+.securityCard {
+  min-height: 78px;
+  padding: 10px;
+
+  display: block;
+
+  border-radius: 8px;
+  background: #262626;
+
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.securityCard:hover {
+  background: #303030;
+}
+
+/* The mega-menu is desktop-only — it would overflow any mobile screen. */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+}

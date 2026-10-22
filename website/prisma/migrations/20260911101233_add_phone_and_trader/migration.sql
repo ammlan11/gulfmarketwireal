@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `isTrader` BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN `phone` VARCHAR(191) NULL;

@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum TraderStatus {
+  YES
+  NO
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  name         String
+  phone        String?
+  country      String?      @db.VarChar(100)
+  email        String       @unique
+  passwordHash String
+  isTrader     TraderStatus @default(NO)
+  role         Role         @default(USER)
+
+  // Profile information
+  region    String? @db.VarChar(100)
+  industry  String? @db.VarChar(150)
+  jobTitle  String? @db.VarChar(100)
+  seniority String? @db.VarChar(100)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions      Session[]
+  savedArticles SavedArticle[]
+  watchlists    WatchlistItem[]
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model NewsArticle {
+  id          String   @id @db.VarChar(64)
+  title       String   @db.Text
+  description String?  @db.Text
+  content     String?  @db.LongText
+  imageUrl    String?  @db.Text
+  source      String   @db.VarChar(255)
+  sourceUrl   String?  @db.Text
+  url         String   @db.Text
+  publishedAt DateTime
+  category    String?  @db.VarChar(50)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  savedBy SavedArticle[]
+
+  @@index([publishedAt])
+  @@index([category])
+}
+
+model SavedArticle {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  articleId String
+  createdAt DateTime @default(now())
+
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@index([userId])
+  @@index([articleId])
+}
+
+model WatchlistItem {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  symbol    String   @db.VarChar(20)
+  name      String?  @db.VarChar(100)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, symbol])
+  @@index([userId])
+}
+
+model Lead {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  email     String   @db.VarChar(191)
+  phone     String?  @db.VarChar(32)
+  isTrader  Boolean?
+  magnet    String   @db.VarChar(100)
+  pagePath  String?  @db.VarChar(255)
+
+  // Set when the lead is exported to Excel from the admin panel.
+  extractedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([email, magnet])
+  @@index([createdAt])
+  @@index([extractedAt])
+}
+
+// Last price seen while each instrument's market was open.
+// Shown as the closing price in the ticker when the market is shut.
+model MarketClose {
+  symbol    String   @id @db.VarChar(32)
+  price     Float
+  change    Float?
+  updatedAt DateTime @updatedAt
+}

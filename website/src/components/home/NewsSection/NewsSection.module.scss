@@ -1,0 +1,187 @@
+.section {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+}
+
+.container {
+  width: min(calc(100% - 64px), 1320px);
+  margin: 0 auto;
+  padding: 42px 0;
+  border-top: 4px solid #000000;
+}
+
+.headingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+.headingRow h2 {
+  margin: 0;
+
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.viewAll {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: none;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 34px;
+}
+
+.leadStory {
+  min-width: 0;
+}
+
+.imageLink {
+  display: block;
+}
+
+.leadImage {
+  display: block;
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-top: 10px;
+
+  font-size: 11px;
+  color: #666666;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.leadStory h3 {
+  margin: 10px 0 0;
+
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.titleLink:hover h3 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.description {
+  margin: 14px 0 0;
+
+  font-size: 16px;
+  line-height: 1.45;
+  color: #333333;
+}
+
+.storyList {
+  border-top: 1px solid #bdbdbd;
+}
+
+.storyItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 20px;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid #cccccc;
+}
+
+.storyContent {
+  min-width: 0;
+}
+
+.storyItem h3 {
+  margin: 8px 0 0;
+
+  font-size: 22px;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.storyItem p {
+  margin: 10px 0 0;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+
+  font-size: 14px;
+  line-height: 1.35;
+  color: #444444;
+}
+
+.storyImage {
+  display: block;
+  width: 150px;
+  height: 105px;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .leadImage {
+    height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: calc(100% - 32px);
+    padding: 30px 0;
+  }
+
+  .headingRow h2 {
+    font-size: 30px;
+  }
+
+  .leadImage {
+    height: 230px;
+  }
+
+  .leadStory h3 {
+    font-size: 28px;
+  }
+
+  .storyItem {
+    grid-template-columns: minmax(0, 1fr) 105px;
+    gap: 14px;
+  }
+
+  .storyItem h3 {
+    font-size: 18px;
+  }
+
+  .storyImage {
+    width: 105px;
+    height: 80px;
+  }
+}

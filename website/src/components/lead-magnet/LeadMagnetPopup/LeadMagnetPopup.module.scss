@@ -1,0 +1,593 @@
+$ink: #111111;
+$gold: #c8a24a;
+$gold-dark: #b08a35;
+$radius: 20px;
+
+/* =========================
+   FULL-SCREEN OVERLAY
+========================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  // The blur itself is set inline in LeadMagnetPopup.tsx.
+  background: rgba(10, 10, 10, 0.45);
+
+  animation: fadeIn 220ms ease;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.dialog {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 300px 1fr;
+
+  width: min(100%, 860px);
+  max-height: calc(100vh - 40px);
+
+  border-radius: $radius;
+  overflow: hidden;
+
+  background: #ffffff;
+  color: #000000;
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.35),
+    0 4px 14px rgba(0, 0, 0, 0.15);
+
+  animation: popIn 280ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/* Left: dark panel with the guide's cover */
+.visual {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+
+  min-height: 460px;
+  padding: 64px 28px 30px;
+
+  background:
+    radial-gradient(circle at 30% 20%, rgba(200, 162, 74, 0.28), transparent 55%),
+    linear-gradient(160deg, #1d1d1d 0%, #0b0b0b 100%);
+  color: #ffffff;
+}
+
+.ribbon {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+  background: $gold;
+  color: $ink;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.cover {
+  width: 190px;
+  height: auto;
+
+  border-radius: 6px;
+
+  box-shadow:
+    0 22px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  transform: rotate(-4deg);
+  transition: transform 300ms ease;
+}
+
+.dialog:hover .cover {
+  transform: rotate(-1deg) translateY(-4px) scale(1.02);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  li {
+    padding: 5px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #e6e6e6;
+  }
+}
+
+/* Right: text and form */
+.content {
+  overflow-y: auto;
+
+  padding: 36px 34px 26px;
+}
+
+/* =========================
+   CLOSE BUTTON (small)
+========================= */
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+
+  width: 28px;
+  height: 28px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+  background: #f1f1f1;
+  color: #555555;
+
+  font-size: 17px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+
+  &:hover {
+    background: $ink;
+    color: #ffffff;
+    transform: rotate(90deg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $gold;
+    outline-offset: 2px;
+  }
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.eyebrow {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: $gold-dark;
+}
+
+.dialog h2 {
+  margin: 0;
+  padding-right: 28px;
+
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.description {
+  margin: 12px 0 0;
+
+  font-size: 15px;
+  line-height: 1.45;
+  color: #444444;
+}
+
+.bullets {
+  margin: 14px 0 0;
+  padding: 0;
+
+  list-style: none;
+
+  li {
+    position: relative;
+
+    margin-top: 7px;
+    padding-left: 26px;
+
+    font-size: 14px;
+    line-height: 1.4;
+
+    &::before {
+      content: "✓";
+
+      position: absolute;
+      left: 0;
+      top: 1px;
+
+      display: grid;
+      place-items: center;
+
+      width: 17px;
+      height: 17px;
+
+      border-radius: 999px;
+      background: $ink;
+      color: $gold;
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+  }
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form {
+  display: grid;
+  gap: 11px;
+
+  margin-top: 20px;
+
+  label {
+    display: grid;
+    gap: 5px;
+
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  em {
+    font-style: normal;
+    font-weight: 400;
+    color: #777777;
+  }
+
+  input {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid #d4d4d4;
+    border-radius: 10px;
+
+    font: inherit;
+    font-size: 15px;
+    font-weight: 400;
+
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+
+    &:focus {
+      outline: none;
+      border-color: $ink;
+      box-shadow: 0 0 0 3px rgba(200, 162, 74, 0.35);
+    }
+  }
+}
+
+.trader {
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  legend {
+    padding: 0;
+    margin-bottom: 5px;
+
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  div {
+    display: flex;
+    gap: 8px;
+  }
+
+  button {
+    flex: 1;
+
+    padding: 9px 12px;
+
+    border: 1px solid #d4d4d4;
+    border-radius: 10px;
+    background: #ffffff;
+
+    font: inherit;
+    font-size: 14px;
+
+    cursor: pointer;
+  }
+
+  .selected {
+    border-color: $ink;
+    background: $ink;
+    color: #ffffff;
+  }
+}
+
+.honeypot {
+  position: absolute !important;
+  left: -9999px;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+}
+
+.error {
+  margin: 0;
+
+  font-size: 13px;
+  color: #c62828;
+}
+
+.submit {
+  display: block;
+
+  width: 100%;
+
+  padding: 15px 24px;
+
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #d6b25a 0%, $gold 100%);
+  color: $ink;
+
+  text-align: center;
+  text-decoration: none;
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(200, 162, 74, 0.35);
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px rgba(200, 162, 74, 0.45);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+  }
+}
+
+.fineprint {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.4;
+  color: #777777;
+}
+
+.fineprint a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* =========================
+   SUCCESS
+========================= */
+
+.success {
+  display: grid;
+  gap: 16px;
+
+  margin-top: 16px;
+
+  p {
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 1.45;
+  }
+}
+
+.secondary {
+  padding: 8px;
+
+  border: 0;
+  background: transparent;
+
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+
+  cursor: pointer;
+}
+
+/* =========================
+   LAUNCHER BUTTON (bottom-right)
+========================= */
+
+.launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1900;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 18px 11px 12px;
+
+  border: 0;
+  border-radius: 999px;
+  background: $ink;
+  color: #ffffff;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+  animation: slideIn 260ms ease;
+  transition: transform 150ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $gold;
+    outline-offset: 2px;
+  }
+}
+
+.launcherIcon {
+  display: inline-grid;
+  place-items: center;
+
+  width: 26px;
+  height: 26px;
+
+  border-radius: 999px;
+  background: $gold;
+  color: $ink;
+
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .dialog,
+  .launcher {
+    animation: none;
+  }
+
+  .cover {
+    transition: none;
+  }
+}
+
+/* =========================
+   SMALLER SCREENS
+========================= */
+
+@media (max-width: 760px) {
+  .dialog {
+    grid-template-columns: 1fr;
+  }
+
+  /* Compact banner with a small cover on top */
+  .visual {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 16px;
+
+    min-height: 0;
+    padding: 18px 20px;
+  }
+
+  .ribbon {
+    display: none;
+  }
+
+  .cover {
+    width: 70px;
+    transform: rotate(-3deg);
+  }
+
+  .facts {
+    justify-content: flex-start;
+    padding-right: 30px;
+  }
+
+  .content {
+    padding: 22px 20px 20px;
+  }
+
+  .close {
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .dialog {
+    max-height: 92vh;
+    border-radius: $radius $radius 0 0;
+  }
+
+  .launcher {
+    right: 16px;
+    bottom: 16px;
+  }
+}
