@@ -17,7 +17,7 @@
     "hash-password": "tsx scripts/hash-password.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.2",
+    "@prisma/client": "^7.10.1",
     "bcryptjs": "^3.0.2",
     "cookie-session": "^2.1.0",
     "dotenv": "^17.2.2",
