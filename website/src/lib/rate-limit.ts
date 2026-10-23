@@ -6,6 +6,39 @@ interface RateLimitStore {
 
 const store: RateLimitStore = {};
 
+// Drop expired entries now and then so the store can't grow forever.
+let lastSweep = 0;
+function sweepExpired(now: number) {
+  if (now - lastSweep < 60 * 1000) return;
+  lastSweep = now;
+  for (const key of Object.keys(store)) {
+    if (store[key].resetAt < now) delete store[key];
+  }
+}
+
+/*
+ * The visitor's real IP, for rate limiting.
+ *
+ * Behind nginx, use X-Real-IP (nginx sets it from the TCP connection, so a
+ * visitor can't fake it). Otherwise use the LAST X-Forwarded-For entry: that
+ * is the one our proxy appended. The first entry is whatever the visitor
+ * typed, so keying on it let anyone dodge the limits by changing it.
+ *
+ * nginx needs:  proxy_set_header X-Real-IP $remote_addr;
+ */
+export function getClientIp(request: Request): string {
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  if (realIp) return realIp;
+
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const hops = forwarded.split(",").map((part) => part.trim()).filter(Boolean);
+    if (hops.length) return hops[hops.length - 1];
+  }
+
+  return "unknown";
+}
+
 /*
  * Simple in-memory sliding window rate limiter
  * Limits requests per IP within a specified time window.
@@ -16,6 +49,7 @@ export function checkRateLimit(
   windowMs: number = 60 * 1000
 ): { success: boolean; remaining: number; reset: number } {
   const now = Date.now();
+  sweepExpired(now);
   const record = store[ip];
 
   if (!record || now > record.resetAt) {
@@ -72,4 +106,33 @@ export function validateCsrfHeader(request: Request): boolean {
   } catch {
     return false;
   }
+}
+
+/*
+ * One-line guard for signed-in actions that change data (account settings,
+ * password, saved articles): blocks cross-site requests and rate-limits per IP.
+ * Returns a response to send back when the request must stop, or null.
+ */
+export function guardMutation(
+  request: Request,
+  action: string,
+  limit = 20,
+  windowMs = 60 * 1000
+): NextResponse | null {
+  if (!validateCsrfHeader(request)) {
+    return NextResponse.json(
+      { success: false, message: "Cross-site request blocked." },
+      { status: 403 }
+    );
+  }
+
+  const check = checkRateLimit(`${action}:${getClientIp(request)}`, limit, windowMs);
+  if (!check.success) {
+    return NextResponse.json(
+      { success: false, message: "Too many requests. Please wait a minute and try again." },
+      { status: 429 }
+    );
+  }
+
+  return null;
 }

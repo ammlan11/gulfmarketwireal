@@ -28,6 +28,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check packages for known security flaws
+        # Fails the build on any CRITICAL advisory. Raise to "high" once
+        # Prisma is upgraded to v7 (its CLI currently has high advisories
+        # that only affect build tooling, not the running site).
+        run: npm audit --omit=dev --audit-level=critical
+
       - name: Generate Prisma Client
         run: npx prisma generate
         env:
@@ -62,6 +68,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Check packages for known security flaws
+        # Fails the build on any CRITICAL advisory. Raise to "high" once
+        # Prisma is upgraded to v7 (its CLI currently has high advisories
+        # that only affect build tooling, not the running site).
+        run: npm audit --omit=dev --audit-level=critical
 
       - name: Generate Prisma Client
         run: npx prisma generate

@@ -4,6 +4,40 @@ This file lists every change made to the website and CMS this month, grouped by 
 
 The starting point was the team's `znrsolutions/news_platform` repo and the CMS as delivered. To see the exact line changes, diff `website/` against that repo.
 
+## Security hardening (23 Oct 2026)
+Fixes from the security review and the team's production-readiness audit. Each file's comments explain the details.
+
+**Website**
+- `package.json`: **Next.js 16.3.4 → 16.4.2** (fixes the critical remote-code-execution, SSRF and cache-poisoning advisories); `sharp` updated.
+- `next.config.ts`: image optimizer only fetches from the CMS (was: any website); security headers on every page (CSP, HSTS, frame, referrer, permissions); `X-Powered-By` removed; SVG never optimized.
+- `src/lib/auth.ts`: session tokens are stored **hashed** (SHA-256) in the database; cookie renamed `sunflower_session` → `gmw_session`; new `deleteOtherSessions()`.
+- `src/app/api/account/password/route.ts`: changing the password **signs the account out on every other device**.
+- `src/lib/rate-limit.ts`: `getClientIp()` uses the IP nginx sets (`X-Real-IP`, or the last `X-Forwarded-For` hop), so visitors can't dodge limits by faking the header; expired entries are cleaned up; new `guardMutation()` = CSRF check + rate limit in one line.
+- `api/account/{profile,password,preferences}`, `api/saved`: now use `guardMutation()` (they had no CSRF check or rate limit). Login, register, leads and forgot-password use `getClientIp()`.
+- `docker-compose.yml`: no passwords in the file (read from `.env`), database bound to `127.0.0.1` only (was open on all interfaces), `--lower_case_table_names=1`, `NEWS_API_URL` passed to the app. `.dockerignore`: excludes `.env`.
+- `src/app/privacy/page.tsx`: cookie table shows the new cookie name.
+
+**CMS**
+- `src/middleware/security.ts` (new): login lockout (5 wrong passwords per IP → blocked 15 minutes, failures logged) and `requireSameOrigin` (refuses form posts from other websites) on every admin form, login and logout.
+- `src/controllers/auth.controller.ts`: supports `ADMIN_PASSWORD_HASH` (bcrypt) so the real password isn't stored on the server; constant-time comparison.
+- `scripts/hash-password.ts` + `npm run hash-password -- 'password'`: makes that hash.
+- `src/middleware/upload.ts`: uploads are checked by their **real contents** (JPG/PNG/WEBP/GIF signatures) and named by the detected type, so an HTML/SVG file disguised as an image is rejected; limit 8 MB (matches the form).
+- `src/app.ts`: Content-Security-Policy turned on; `trust proxy` for nginx; `X-Powered-By` removed; static files never serve dotfiles; cookie renamed `gmw_cms_session`.
+- `src/middleware/auth.ts`: a session only counts if it belongs to the current `ADMIN_EMAIL`.
+- `public/js/admin.js` + `views/news/index.ejs`: delete confirmation moved out of inline script (needed for the CSP).
+- `src/middleware/error-handler.ts`: clear messages for rejected or oversized uploads.
+- `package.json`: `npm start` pointed at `dist/server.js`, but the build writes `dist/src/server.js`; fixed.
+
+**Repository**
+- `.github/workflows/ci.yml`: `npm audit` step fails the build on critical advisories.
+- `.github/dependabot.yml`: weekly update pull requests for both projects.
+- `.github/workflows/codeql.yml`: code security scanning on every pull request.
+- `.github/pull_request_template.md`: security checklist for every change.
+
+**After deploying:** every reader and editor is signed out once (new cookie names and hashed sessions). See README "Deploy checklist" for the new server settings.
+
+**Not fixed yet (from the team audit):** fake forgot-password endpoint, fake Google "Linked accounts" card and other placeholder UI, broken "View all" links, no automated tests, unpaginated CMS dashboard, Prisma 7 upgrade (its CLI has high advisories that affect build tooling only).
+
 ---
 
 ## Website (`website/`)
@@ -136,4 +170,3 @@ On a fresh MariaDB with every migration applied, using the scheduled task's real
 ## Known issues (not caused by these changes)
 - **Website migration table-name case:** the first migration creates `User` but later ones alter `user`. They only apply on MySQL with `lower_case_table_names=1`, so keep that setting. Don't edit migrations already applied.
 - **Lint warnings** (24, no errors): mostly `<img>` vs `next/image` and unused variables in older files.
-- `website/docker-compose.yml` contains development-only database passwords. Don't reuse them in production.

@@ -151,7 +151,7 @@ export default function PrivacyPage() {
             </thead>
             <tbody>
               <tr>
-                <td>sunflower_session</td>
+                <td>gmw_session</td>
                 <td>Essential cookie</td>
                 <td>Keeps you signed in to your account</td>
                 <td>30 days, or until you sign out</td>

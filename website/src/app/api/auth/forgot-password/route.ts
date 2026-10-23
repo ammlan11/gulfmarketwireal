@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { checkRateLimit, validateCsrfHeader } from "@/lib/rate-limit";
+import { checkRateLimit, validateCsrfHeader, getClientIp } from "@/lib/rate-limit";
 
 /*
  * POST /api/auth/forgot-password
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = getClientIp(request);
     const rateCheck = checkRateLimit(`forgot-password:${ip}`, 3, 60 * 1000);
     if (!rateCheck.success) {
       return NextResponse.json(

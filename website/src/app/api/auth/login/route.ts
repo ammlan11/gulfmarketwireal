@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 import { prisma } from "@/lib/prisma";
 import { createSession } from "@/lib/auth";
-import { checkRateLimit, validateCsrfHeader } from "@/lib/rate-limit";
+import { checkRateLimit, validateCsrfHeader, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   try {
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     }
 
     // Rate limiting: max 5 login attempts per IP per 1 minute
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = getClientIp(request);
     const rateCheck = checkRateLimit(`login:${ip}`, 5, 60 * 1000);
     if (!rateCheck.success) {
       return NextResponse.json(

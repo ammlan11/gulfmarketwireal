@@ -29,20 +29,38 @@ app.set("layout", "layout");
 ========================================= */
 
 /*
- * Allow uploaded images to be displayed by
- * the separately hosted customer-facing app.
+ * nginx sits in front of the CMS. Trust exactly one proxy hop, so req.ip is
+ * the visitor's real IP (used by the login lockout) and can't be faked with
+ * a made-up X-Forwarded-For header.
+ */
+app.set("trust proxy", 1);
+
+// Don't advertise "Express" in every response.
+app.disable("x-powered-by");
+
+/*
+ * Security headers. The Content-Security-Policy only lets pages load
+ * scripts, styles and images from the CMS itself, so injected markup can't
+ * pull in outside code.
  *
- * Example:
- *
- * CMS:
- * http://localhost:4000
- *
- * Customer site:
- * http://localhost:3000
+ * crossOriginResourcePolicy "cross-origin" lets the public website (another
+ * domain) display the uploaded article photos.
  */
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+        formAction: ["'self'"],
+        frameAncestors: ["'none'"],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        upgradeInsecureRequests: env.NODE_ENV === "production" ? [] : null,
+      },
+    },
 
     crossOriginResourcePolicy: {
       policy: "cross-origin",
@@ -80,7 +98,13 @@ app.use(
  *
  * /uploads/news/example.webp
  */
-app.use(express.static(path.join(process.cwd(), "public")));
+app.use(
+  express.static(path.join(process.cwd(), "public"), {
+    // Never list folders or serve hidden files like .env
+    dotfiles: "deny",
+    index: false,
+  }),
+);
 
 /* =========================================
    ADMIN SESSION
@@ -88,12 +112,15 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 app.use(
   cookieSession({
-    name: "sumar_news_admin",
+    name: "gmw_cms_session",
 
     secret: env.SESSION_SECRET,
 
     httpOnly: true,
 
+    // "lax": the browser won't send the CMS login with form posts that
+    // start on another site. requireSameOrigin (middleware/security.ts)
+    // checks every post as a second layer of CSRF protection.
     sameSite: "lax",
 
     secure: env.NODE_ENV === "production",

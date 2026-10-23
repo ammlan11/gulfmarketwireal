@@ -1,16 +1,24 @@
-version: "3.8"
-
+# Runs the website and its MySQL database with Docker.
+#
+# Passwords come from website/.env (never committed). Required there:
+#   MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD, NEWS_API_URL, NEXT_PUBLIC_SITE_URL
+# Optional: MARKET_API_BASE_URL
+#
+# The database is NOT published to the internet: only the app container can
+# reach it. To connect from the server itself (e.g. Prisma Studio), it is
+# bound to 127.0.0.1 only.
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000" # nginx on the same server proxies to this
     environment:
-      - DATABASE_URL=mysql://sunflower:sunflower_pass@db:3306/sunflower_db
-      - GNEWS_API_KEY=${GNEWS_API_KEY}
-      - MARKET_API_BASE_URL=${MARKET_API_BASE_URL}
+      - DATABASE_URL=mysql://sunflower:${MYSQL_PASSWORD:?set MYSQL_PASSWORD in .env}@db:3306/sunflower_db
+      - NEWS_API_URL=${NEWS_API_URL:?set NEWS_API_URL in .env}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:?set NEXT_PUBLIC_SITE_URL in .env}
+      - MARKET_API_BASE_URL=${MARKET_API_BASE_URL:-}
       - NODE_ENV=production
       - PORT=3000
     depends_on:
@@ -20,13 +28,16 @@ services:
   db:
     image: mysql:8.0
     restart: always
+    # Migrations mix `User` and `user`; this makes table names case-insensitive.
+    command: ["--lower_case_table_names=1"]
     environment:
+      # Names kept from the original setup so an existing data volume still works.
       MYSQL_DATABASE: sunflower_db
       MYSQL_USER: sunflower
-      MYSQL_PASSWORD: sunflower_pass
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set MYSQL_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in .env}
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:

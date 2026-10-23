@@ -11,7 +11,12 @@ const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   SESSION_SECRET: z.string().min(16),
   ADMIN_EMAIL: z.string().trim().email(),
-  ADMIN_PASSWORD: z.string().min(8),
+
+  // Set ONE of these. ADMIN_PASSWORD_HASH (a bcrypt hash, made with
+  // `npm run hash-password -- 'your-password'`) is safer: the real password
+  // then isn't stored on the server at all.
+  ADMIN_PASSWORD: optional(z.string().min(8)),
+  ADMIN_PASSWORD_HASH: optional(z.string().regex(/^\$2[aby]\$\d{2}\$/, "must be a bcrypt hash")),
   PUBLIC_BASE_URL: z.string().url().default("http://localhost:4000"),
 
   // Secret key the automated news task sends to POST /api/ingest/news.
@@ -20,6 +25,9 @@ const schema = z.object({
 
   // Pexels API key (free at pexels.com/api) used to find article photos.
   PEXELS_API_KEY: optional(z.string().min(1)),
+}).refine((value) => value.ADMIN_PASSWORD || value.ADMIN_PASSWORD_HASH, {
+  message: "set ADMIN_PASSWORD_HASH (recommended) or ADMIN_PASSWORD",
+  path: ["ADMIN_PASSWORD_HASH"],
 });
 
 const parsed = schema.safeParse(process.env);

@@ -58,3 +58,6 @@ npm run dev                 # http://localhost:3000
 2. **CMS server settings:** `INGEST_API_KEY` (shared with the scheduled task) and `PEXELS_API_KEY` (free from pexels.com/api).
 3. **Website server settings:** `NEXT_PUBLIC_SITE_URL=https://gulfmarketwire.com` and `MARKET_API_BASE_URL` (ticker API).
 4. Make at least one admin: `UPDATE User SET role='ADMIN' WHERE email='…';` in the website database.
+5. **CMS admin password:** run `npm run hash-password -- 'a-long-new-password'` in `cms/`, put the printed `ADMIN_PASSWORD_HASH=...` line in the server's `cms/.env`, delete `ADMIN_PASSWORD`, restart.
+6. **nginx** (both sites): `proxy_set_header X-Real-IP $remote_addr;`, `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`, `server_tokens off;`.
+7. **Firewall:** only ports 80 and 443 open to the internet. MySQL (3306) and the app ports (3000, 4000) must not be reachable from outside.

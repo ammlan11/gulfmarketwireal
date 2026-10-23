@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
+import { guardMutation } from "@/lib/rate-limit";
 import bcrypt from "bcryptjs";
 
-import { getCurrentUser } from "@/lib/auth";
+import { deleteOtherSessions, getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
   request: Request,
 ) {
   try {
+    const blocked = guardMutation(request, "password", 5);
+    if (blocked) return blocked;
+
     const currentUser =
       await getCurrentUser();
 
@@ -152,10 +156,14 @@ export async function PATCH(
       },
     });
 
+    // Sign the account out on every other device, so anyone using a
+    // stolen session loses access the moment the password changes.
+    await deleteOtherSessions(currentUser.id);
+
     return NextResponse.json({
       success: true,
       message:
-        "Password changed successfully.",
+        "Password changed. You have been signed out on your other devices.",
     });
   } catch (error) {
     console.error(

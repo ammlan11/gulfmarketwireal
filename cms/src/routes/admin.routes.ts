@@ -2,11 +2,15 @@ import { Router } from "express";
 
 import * as admin from "../controllers/admin.controller";
 import { requireAdmin } from "../middleware/auth";
-import { upload } from "../middleware/upload";
+import { upload, verifyUploadedImage } from "../middleware/upload";
+import { requireSameOrigin } from "../middleware/security";
 
 const router = Router();
 
 router.use(requireAdmin);
+
+// Refuse form posts that come from another website (CSRF).
+router.use(requireSameOrigin);
 
 // Dashboard
 router.get("/news", admin.dashboard);
@@ -17,6 +21,7 @@ router.get("/news/new", admin.createPage);
 router.post(
   "/news",
   upload.single("image"),
+  verifyUploadedImage,
   admin.create,
 );
 
@@ -35,6 +40,7 @@ router.get(
 router.post(
   "/news/:id",
   upload.single("image"),
+  verifyUploadedImage,
   admin.edit,
 );
 

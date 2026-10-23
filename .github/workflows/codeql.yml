@@ -1,0 +1,33 @@
+# CodeQL scans the code for security bugs (injection, open redirects, unsafe
+# file handling, ...) on every pull request and once a week. Findings appear
+# under the repo's Security tab.
+#
+# Free on public repos. On a PRIVATE repo it needs GitHub Advanced Security
+# (Code Security); without it this workflow reports an error and can be
+# deleted.
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          queries: security-extended
+
+      - uses: github/codeql-action/analyze@v3

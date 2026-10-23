@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { guardMutation } from "@/lib/rate-limit";
 
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -7,6 +8,9 @@ export async function PATCH(
   request: Request,
 ) {
   try {
+    const blocked = guardMutation(request, "profile", 20);
+    if (blocked) return blocked;
+
     const currentUser =
       await getCurrentUser();
 

@@ -5,7 +5,7 @@ import {
 } from "libphonenumber-js";
 
 import { prisma } from "@/lib/prisma";
-import { checkRateLimit, validateCsrfHeader } from "@/lib/rate-limit";
+import { checkRateLimit, validateCsrfHeader, getClientIp } from "@/lib/rate-limit";
 import { LEAD_MAGNET } from "@/lib/lead-magnet";
 
 /*
@@ -24,8 +24,7 @@ export async function POST(request: Request) {
     }
 
     const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      "127.0.0.1";
+      getClientIp(request);
 
     const rateCheck = checkRateLimit(`leads:${ip}`, 5, 60 * 1000);
 
