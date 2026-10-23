@@ -104,6 +104,8 @@ Green **Publish** button on drafts and **Move to draft** on published articles, 
 - `views/news/index.ejs`, `views/news/view.ejs`, `public/css/admin.css`
 
 ### 4. Small fixes
+- `src/config/env.ts`: blank optional settings (e.g. `PEXELS_API_KEY=""`) count as unset instead of stopping the CMS from starting; a wrong setting now prints a plain message naming it
+- `src/controllers/auth.controller.ts`: login email is no longer case-sensitive and ignores stray spaces (password still exact)
 - `src/types/express-ejs-layouts.d.ts`: missing type definition (fixes `npm run build`)
 - `.env.example` added; `.gitignore` ignores `public/uploads/` (photos live on the server)
 
