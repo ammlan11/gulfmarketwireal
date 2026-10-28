@@ -4,6 +4,21 @@ This file lists every change made to the website and CMS this month, grouped by 
 
 The starting point was the team's `znrsolutions/news_platform` repo and the CMS as delivered. To see the exact line changes, diff `website/` against that repo.
 
+## Instant Top Story / publish updates (28 Oct 2026)
+Before: after publishing or changing the Top Story, the homepage could show the old version for 5-10 minutes (page cache + article cache).
+Now the CMS tells the website straight away and the next visit gets the fresh page.
+
+- `cms/src/services/website-refresh.service.ts` (new): `refreshWebsite()` posts to the website; never blocks or fails the editor's action.
+- `cms/src/controllers/admin.controller.ts`: called after create, edit (includes the Top Story checkbox), delete, Publish / Move to draft.
+- `cms/src/controllers/ingest.controller.ts`: called when the news task posts an article as already published (drafts don't change the site).
+- `cms/src/config/env.ts`, `cms/.env.example`: `WEBSITE_REVALIDATE_URL`, `WEBSITE_REVALIDATE_SECRET` (blank = off).
+- `website/src/app/api/revalidate/route.ts` (new): `POST /api/revalidate` with `Authorization: Bearer <REVALIDATE_SECRET>`; clears the article cache and marks every page stale.
+- `website/src/services/news.service.ts` → `clearNewsCache()`; `website/.env.example`: `REVALIDATE_SECRET`.
+
+**To switch it on:** pick one random value (32+ characters, e.g. `openssl rand -hex 32`). Website `.env`: `REVALIDATE_SECRET=<value>`. CMS `.env`: `WEBSITE_REVALIDATE_URL=https://gulfmarketwire.com/api/revalidate` and `WEBSITE_REVALIDATE_SECRET=<same value>`. Restart both.
+
+---
+
 ## Security hardening (23 Oct 2026)
 Fixes from the security review and the team's production-readiness audit. Each file's comments explain the details.
 

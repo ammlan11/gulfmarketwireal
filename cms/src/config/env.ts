@@ -25,6 +25,11 @@ const schema = z.object({
 
   // Pexels API key (free at pexels.com/api) used to find article photos.
   PEXELS_API_KEY: optional(z.string().min(1)),
+
+  // Instant website refresh after publishing (see services/website-refresh.service.ts).
+  // Both blank = off; the website then refreshes on its normal 5-minute schedule.
+  WEBSITE_REVALIDATE_URL: optional(z.string().url()),
+  WEBSITE_REVALIDATE_SECRET: optional(z.string().min(32)),
 }).refine((value) => value.ADMIN_PASSWORD || value.ADMIN_PASSWORD_HASH, {
   message: "set ADMIN_PASSWORD_HASH (recommended) or ADMIN_PASSWORD",
   path: ["ADMIN_PASSWORD_HASH"],

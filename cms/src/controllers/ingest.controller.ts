@@ -6,6 +6,7 @@ import path from "path";
 import { z } from "zod";
 
 import { env } from "../config/env";
+import { refreshWebsite } from "../services/website-refresh.service";
 import { prisma } from "../config/prisma";
 import { generateArticleId } from "../utils/article-id";
 import { createArticle, NEWS_CATEGORIES } from "../services/news.service";
@@ -199,6 +200,11 @@ export async function ingestNews(req: Request, res: Response) {
       status: (input.status ?? "DRAFT") as NewsStatus,
       isTopStory: false,
     });
+
+    // Drafts don't change the website; only refresh when it went live directly.
+    if (article.status === "PUBLISHED") {
+      refreshWebsite("article ingested as published");
+    }
 
     const base = env.PUBLIC_BASE_URL.replace(/\/$/, "");
 

@@ -649,3 +649,16 @@ async function fetchArticleById(
  * share-preview metadata share one CMS lookup.
  */
 export const getArticleById = cache(fetchArticleById);
+
+/* =========================================
+   INSTANT UPDATES FROM THE CMS
+========================================= */
+
+/*
+ * Forget every article list kept in memory, so the next page render asks
+ * the CMS again. Called by POST /api/revalidate when an editor publishes,
+ * unpublishes, edits, deletes or changes the Top Story in the CMS.
+ */
+export function clearNewsCache() {
+  newsCache.clear();
+}

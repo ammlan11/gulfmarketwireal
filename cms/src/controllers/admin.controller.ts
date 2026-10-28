@@ -6,6 +6,7 @@ import path from "path";
 
 import { getRouteParam } from "../utils/request";
 import { prisma } from "../config/prisma";
+import { refreshWebsite } from "../services/website-refresh.service";
 
 import {
   createArticle,
@@ -199,6 +200,8 @@ export async function create(req: Request, res: Response) {
 
     const article = await createArticle(parseInput(req.body, imageUrl));
 
+    refreshWebsite("article created");
+
     return res.redirect(`/admin/news/${article.id}`);
   } catch (e: any) {
     /*
@@ -367,6 +370,9 @@ export async function edit(req: Request, res: Response) {
       await deleteUploadedImage(existingArticle.imageUrl);
     }
 
+    // Covers edits and Top Story changes (the checkbox is on this form).
+    refreshWebsite("article edited");
+
     return res.redirect(`/admin/news/${article.id}`);
   } catch (e: any) {
     /*
@@ -444,6 +450,8 @@ export async function remove(req: Request, res: Response) {
    */
   await deleteUploadedImage(article.imageUrl);
 
+  refreshWebsite("article deleted");
+
   return res.redirect("/admin/news");
 }
 
@@ -484,6 +492,8 @@ export async function changeStatus(req: Request, res: Response) {
       message: "Article not found.",
     });
   }
+
+  refreshWebsite(status === "PUBLISHED" ? "article published" : "article moved to draft");
 
   // Go back to the page the button was on (dashboard keeps its filters).
   const returnTo =
